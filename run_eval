@@ -1,0 +1,60 @@
+#!/bin/bash
+
+BATCH_SIZE=256
+DEVICE=""
+MODEL_PATHS=()
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -m|--models)
+            shift
+            while [[ $# -gt 0 && ! $1 == -* ]]; do
+                DATASET=$1
+                PATH=$2
+                MODEL_PATHS+=("$DATASET")
+                MODEL_PATHS+=("$PATH")
+                shift 2
+            done
+            ;;
+        -b|--batch_size)
+            BATCH_SIZE=$2
+            shift 2
+            ;;
+        -d|--device)
+            DEVICE=$2
+            shift 2
+            ;;
+        -h|--help)
+            echo "用法: $0 [选项]"
+            echo "选项:"
+            echo "  -m, --models [数据集 路径]...   指定预训练模型路径"
+            echo "  -b, --batch_size [数量]        设置批次大小（默认: 256）"
+            echo "  -d, --device [cpu/cuda]        指定计算设备"
+            echo "  -h, --help                     显示帮助信息"
+            exit 0
+            ;;
+        *)
+            echo "未知选项: $1"
+            exit 1
+            ;;
+    esac
+done
+
+MODEL_CMD=""
+if [ ${#MODEL_PATHS[@]} -gt 0 ]; then
+    MODEL_CMD="--models ${MODEL_PATHS[@]}"
+fi
+
+python3 - <<END
+from eval_utils import evaluate_all_datasets
+
+results = evaluate_all_datasets(
+    model_params=dict(zip(${MODEL_PATHS[@]::2}, ${MODEL_PATHS[@]::1})),
+    batch_size=${BATCH_SIZE},
+    device="${DEVICE}" if "${DEVICE}" else None
+)
+
+print("\n=== 最终结果 ===")
+for ds, metrics in results.items():
+    print(f"{ds.upper():<12} | 准确率: {metrics['accuracy']:.2%} | 耗时: {metrics['time_sec']}s")
+END

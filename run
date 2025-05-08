@@ -1,0 +1,2 @@
+chmod +x run_eval.sh
+./run_eval.sh --models mnist ./model.pth --device cuda

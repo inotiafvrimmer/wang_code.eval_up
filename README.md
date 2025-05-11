@@ -4,7 +4,7 @@
 
 When facing the issue of lightweight spiking neural networks, we aim to improve the accuracy of SNN networks and reduce memory usage by integrating dynamic corrections through pulse encoding and overall collaborative optimization:
 
-![Alt Text](png/流程示意图底.png)
+![Alt Text](png/流程示意图底片.png)
 
 #### Feature Comparison of SNN calibration
 

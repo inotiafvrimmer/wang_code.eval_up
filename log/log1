@@ -1,0 +1,6 @@
+[MNIST       ] Acc: 98.12% | Time: 34.3s | Steps: 8 | Spikes: 1,804,867
+[CIFAR10     ] Acc: 90.19% | Time: 150.3s | Steps: 20 | Spikes: 8,901,764
+[CIFAR100    ] Acc: 64.81% | Time: 248.3s | Steps: 25 | Spikes: 14,901,128
+[CIFAR10-DVS ] Acc: 74.45% | Time: 90.7s | Steps: 20 | Spikes: 9,078,901
+[DVS-GESTURE ] Acc: 96.73% | Time: 48.2s | Steps: 10 | Spikes: 4,779,921
+[NMNIST      ] Acc: 98.34% | Time: 37.2s | Steps: 8 | Spikes: 1,796,872

@@ -1,0 +1,7 @@
+[MNIST       ] Acc: 97.55% | Time: 60.8s | Steps: 20 | Spikes: 4,083,074
+
+[MNIST       ] Acc: 98.12% | Time: 43.3s | Steps: 20 | Spikes: 3,755,549
+
+[MNIST       ] Acc: 97.99% | Time: 35.6s | Steps: 8 | Spikes: 1,528,006
+
+[MNIST       ] Acc: 98.14% | Time: 34.2s | Steps: 8 | Spikes: 1,794,223

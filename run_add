@@ -1,0 +1,17 @@
+chmod +x run_eval.sh
+./run_eval.sh --models mnist ./model.pth --device cuda
+
+chmod +x run_eval.sh
+./run_eval.sh --models cifar-10 ./model.pth --device cuda
+
+chmod +x run_eval.sh
+./run_eval.sh --models cifar-100 ./model.pth --device cuda
+
+chmod +x run_eval.sh
+./run_eval.sh --models cifar10-dvs ./model.pth --device cuda
+
+chmod +x run_eval.sh
+./run_eval.sh --models dvs-gesture ./model.pth --device cuda
+
+chmod +x run_eval.sh
+./run_eval.sh --models nmnist ./model.pth --device cuda

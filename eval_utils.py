@@ -31,17 +31,18 @@ def evaluate_all_datasets(model_params=None, batch_size=128, device=None):
 
         # 评估流程
         start_time = time.time()
-        acc = _evaluate_model(model, loader, device)
+        acc, total_spikes = _evaluate_model(model, loader, device)
         eval_time = time.time() - start_time
 
         results[name] = {
             'accuracy': acc,
             'time_sec': round(eval_time, 2),
-            'time_steps': model.time_steps
+            'time_steps': model.time_steps,
+            'spikes': total_spikes
         }
 
         # 格式化输出
-        print(f"[{name.upper():<12}] Acc: {acc:.2%} | Time: {eval_time:.1f}s | Steps: {model.time_steps}")
+        print(f"[{name.upper():<12}] Acc: {acc:.2%} | Time: {eval_time:.1f}s | Steps: {model.time_steps} | Spikes: {total_spikes:,}")
 
     return results
 
@@ -58,6 +59,7 @@ def _evaluate_model(model, loader, device):
     """评估"""
     model.eval()
     correct = total = 0
+    total_spikes = 0
 
     with torch.no_grad():
         for inputs, labels in loader:
@@ -68,10 +70,11 @@ def _evaluate_model(model, loader, device):
 
             # 推理计算
             spikes, _ = model(inputs)
+            total_spikes += spikes.sum().item()
             preds = spikes.mean(dim=1).argmax(dim=1)
 
             # 统计结果
             correct += (preds.cpu() == labels).sum().item()
             total += labels.size(0)
 
-    return correct / total if total > 0 else 0.0
+    return (correct / total if total > 0 else 0.0),total_spikes
